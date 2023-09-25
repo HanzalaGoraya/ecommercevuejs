@@ -37,10 +37,10 @@
 
 <script>
 export default {
-    props:{},
+    props: {},
     data: () => ({
         show: false,
-       
+
     }),
 }
 </script> 

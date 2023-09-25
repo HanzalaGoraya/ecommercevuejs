@@ -1,77 +1,86 @@
 <template>
-   <v-app>
-          
-    
-     <v-app-bar app>
-          <v-toolbar-title class="text-blue-lighten-3">User Dashboard</v-toolbar-title>
-          <v-toolbar-title class="title" @click ="clickevent('home')">Home </v-toolbar-title>
-          <v-toolbar-title class="title" @click ="clickevent('books')">Books </v-toolbar-title>
-          <v-toolbar-title class="title" @click ="clickevent('catelog')">Catelog </v-toolbar-title>
-          <v-toolbar-title class="title" @click ="clickevent('orders')">Orders </v-toolbar-title> 
-    
-            <v-spacer></v-spacer>
-            <v-text-field
-            v-model="search"
-            label="Search"
-            single-line
-            hide-details
-             class="title"
-          ></v-text-field>
-          
-          <v-btn  class="title" density="compact" icon="mdi-magnify"></v-btn>
-            <v-spacer></v-spacer>
-
-            <v-btn density="compact" icon="mdi-cart"></v-btn>
-          <v-btn text @click="logout">Logout</v-btn>
-
-           
-
-           <v-menu>
-                 <template v-slot:activator="{ props }">
-                  <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
-                </template>
-
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title @click ="clickevent('home')" >Home</v-list-item-title>
-                    <v-list-item-title @click ="clickevent('books')">Books</v-list-item-title>
-                    <v-list-item-title @click ="clickevent('catelog')">Catelog</v-list-item-title>
-                    <v-list-item-title @click ="clickevent('orders')">Orders</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-
-          </v-app-bar>
+  <v-app>
 
 
-
-           <div class = "my-10 py-10">
-
-          
-          <div v-if="home">
-             <h1>Home</h1>
-             
-             
-          </div>
-
-          <div v-if="books">
-             <h1>Books</h1>
-            </div>
-
-            <div v-if="catelog">
-             <h1>Catelog</h1>
-            </div>
+    <v-app-bar app class="color-blue-lighten-3">
+      <v-spacer></v-spacer>
+      <div><v-toolbar-title class="text-blue">User Dashboard</v-toolbar-title></div>
+      <v-spacer></v-spacer>
+      <v-toolbar-title class="title" @click="clickevent('home')">Home </v-toolbar-title>
+      <v-toolbar-title class="title" @click="clickevent('books')">Books </v-toolbar-title>
+      <v-toolbar-title class="title" @click="clickevent('catelog')">Catelog </v-toolbar-title>
+      <v-toolbar-title class="title" @click="clickevent('orders')">Orders </v-toolbar-title>
 
 
-            <div v-if="orders">
-             <h1>Orders</h1>
-            </div>
-           
-           
-       </div>
-      
+      <v-text-field v-model="search" label="Search" single-line hide-details class="title"></v-text-field>
 
-       
+      <v-btn class="title" density="compact" icon="mdi-magnify"></v-btn>
+      <v-spacer></v-spacer>
+
+
+      <v-btn density="compact" icon="mdi-cart"></v-btn>
+      <v-btn text @click="logout">Logout</v-btn>
+
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn icon="mdi-account" v-bind="props"></v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+
+            <v-list-item-title>Welcome</v-list-item-title>
+            <v-list-item-title>Ali Ashraf</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-title @click="clickevent('home')">Home</v-list-item-title>
+            <v-list-item-title @click="clickevent('books')">Books</v-list-item-title>
+            <v-list-item-title @click="clickevent('catelog')">Catelog</v-list-item-title>
+            <v-list-item-title @click="clickevent('orders')">Orders</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+    </v-app-bar>
+
+
+
+    <div class="my-10 mx-10 py-10">
+
+
+      <div v-if="home">
+        <h1>Home</h1>
+
+
+      </div>
+
+      <div v-if="books">
+        <h1>Books</h1>
+      </div>
+
+      <div v-if="catelog">
+        <h1>Catelog</h1>
+      </div>
+
+
+      <div v-if="orders">
+        <h1>Orders</h1>
+      </div>
+
+      <card />
+    </div>
+
+
+
   </v-app>
 </template>
 
@@ -79,8 +88,8 @@
 import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
 export default {
-  components: { navbar, card  },
-  props:{},
+  components: { navbar, card },
+  props: {},
   data() {
     return {
       home: true,
@@ -91,23 +100,22 @@ export default {
       books: [],
       catelog: [],
       orders: [],
-      search:'',
+      search: '',
 
-     
-       
+
+
 
     }
-     
+
   },
   mounted() {
-   
-    
+
+
   },
   methods: {
-     clickevent(name) {
+    clickevent(name) {
       console.log(name);
-      if (name === 'home')
-      {
+      if (name === 'home') {
         this.home = true;
         this.books = false;
         this.catelog = false;
@@ -118,7 +126,7 @@ export default {
         this.books = true;
         this.catelog = false;
         this.orders = false;
-        
+
       }
       else if (name === 'catelog') {
         this.home = false;
@@ -134,7 +142,7 @@ export default {
         this.orders = true;
 
       }
-      
+
     },
     logout() {
 
@@ -143,12 +151,12 @@ export default {
 
     },
 
-    
-  },
-  computed(){
 
   },
-    
+  computed() {
+
+  },
+
 
 }
 </script>
@@ -175,4 +183,5 @@ export default {
   }
 }
 
-/* Add more media queries and styles as needed for other screen sizes */</style>
+/* Add more media queries and styles as needed for other screen sizes */
+</style>
