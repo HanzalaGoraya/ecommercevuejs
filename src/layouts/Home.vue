@@ -60,6 +60,13 @@
       <div v-if="home">
         <h1>Home</h1>
 
+        <v-row class="mb-6" no-gutters>
+          <v-col v-for="n in 1" :key="n" cols="12" sm="6">
+            <div v-for="book in books" :key="book.id">
+              <card :id="book.id" :title="book.title" :des="book.decription" :price="book.price" />
+            </div>
+          </v-col>
+        </v-row>
 
       </div>
 
@@ -76,7 +83,7 @@
         <h1>Orders</h1>
       </div>
 
-      <card />
+
     </div>
 
 
@@ -101,6 +108,10 @@ export default {
       catelog: [],
       orders: [],
       search: '',
+      books: [
+        { "id": '1', "title": 'abc', "decription": 'Lorem', "price": '20' },
+        { "id": '2', "title": 'abcd', "decription": 'Loremd', "price": '200' },
+      ]
 
 
 

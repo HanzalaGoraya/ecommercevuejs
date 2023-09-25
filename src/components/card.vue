@@ -1,16 +1,25 @@
 
 <template>
-    <v-card class="mx-auto" max-width="344" v-for="books in bookdata" :key="books.price">
-        <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" cover></v-img>
+    <v-card class="mx-auto ma-4" max-width="95%">
+        <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="300px" cover></v-img>
 
         <v-card-title>
-            Top western road trips
+            {{ title }}
         </v-card-title>
 
         <v-card-subtitle>
-            1,000 miles of wonder
+            {{ price }} $
         </v-card-subtitle>
 
+        <v-expand-transition>
+            <div>
+                <v-divider></v-divider>
+
+                <v-card-text>
+                    description : {{ des }}
+                </v-card-text>
+            </div>
+        </v-expand-transition>
         <v-card-actions>
             <v-btn color="orange-lighten-2" variant="text">
                 <span>Product Details</span>
@@ -18,18 +27,7 @@
 
         </v-card-actions>
 
-        <v-expand-transition>
-            <div v-show="show">
-                <v-divider></v-divider>
 
-                <v-card-text>
-                    I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for
-                    sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey,
-                    you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way
-                    to escape.
-                </v-card-text>
-            </div>
-        </v-expand-transition>
     </v-card>
 </template>
 
@@ -40,6 +38,8 @@ export default {
     props: {},
     data: () => ({
         show: false,
+
+
 
     }),
 }
