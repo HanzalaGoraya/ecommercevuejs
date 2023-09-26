@@ -77,6 +77,7 @@
 
       <div v-if="users">
         <h1>Users</h1>
+        <usercard />
       </div>
 
 
@@ -90,8 +91,9 @@
 <script>
 import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
+import usercard from '../components/usercard.vue'
 export default {
-  components: { navbar, card },
+  components: { navbar, card, usercard },
   props: {},
   data() {
     return {

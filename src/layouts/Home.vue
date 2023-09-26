@@ -164,12 +164,13 @@ export default {
 
 
   },
-  mounted: {
+  mounted() {
 
   },
-  computed: {
+  compued() {
 
   },
+
 
 
 }
