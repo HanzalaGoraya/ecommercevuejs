@@ -60,14 +60,15 @@
       <div v-if="home">
         <h1>Home</h1>
 
-        <v-row class="mb-6" no-gutters>
-          <v-col v-for="n in 1" :key="n" cols="12" sm="6">
-            <div v-for="book in books" :key="book.id">
-              <card :id="book.id" :title="book.title" :des="book.decription" :price="book.price" />
-            </div>
-          </v-col>
-        </v-row>
-
+        <v-container class="d-flex" fluid>
+          <v-row class="mb-6" no-gutters>
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="6">
+              <div>
+                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
       </div>
 
       <div v-if="books">
@@ -109,18 +110,17 @@ export default {
       orders: [],
       search: '',
       books: [
-        { "id": '1', "title": 'abc', "decription": 'Lorem', "price": '20' },
-        { "id": '2', "title": 'abcd', "decription": 'Loremd', "price": '200' },
+        { "id": '1', "title": 'abc', "description": 'Lorem', "price": '20' },
+        { "id": '2', "title": 'abcd', "description": 'Loremd', "price": '200' },
+        { "id": '3', "title": 'abcde', "description": 'Loremde', "price": '200' },
+        { "id": '4', "title": 'abcdef', "description": 'Loremdef', "price": '200' },
+        { "id": '5', "title": 'abcdefg', "description": 'Loremdefg', "price": '200' },
       ]
 
 
 
 
     }
-
-  },
-  mounted() {
-
 
   },
   methods: {
@@ -164,6 +164,7 @@ export default {
 
 
   },
+
   computed() {
 
   },

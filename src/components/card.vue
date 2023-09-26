@@ -16,7 +16,7 @@
                 <v-divider></v-divider>
 
                 <v-card-text>
-                    description : {{ des }}
+                    description : {{ description }}
                 </v-card-text>
             </div>
         </v-expand-transition>
@@ -38,7 +38,6 @@ export default {
     props: {},
     data: () => ({
         show: false,
-
 
 
     }),
