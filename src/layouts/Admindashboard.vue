@@ -1,0 +1,183 @@
+<template>
+  <v-app>
+
+
+    <v-app-bar app class="color-blue-lighten-3">
+      <v-spacer></v-spacer>
+      <div><v-toolbar-title class="text-blue">Admin Dashboard</v-toolbar-title></div>
+      <v-spacer></v-spacer>
+      <v-toolbar-title class="title" @click="clickevent('home')">Home </v-toolbar-title>
+      <v-toolbar-title class="title" @click="clickevent('orders')">Orders </v-toolbar-title>
+      <v-toolbar-title class="title" @click="clickevent('users')">Users </v-toolbar-title>
+
+
+      <!-- <v-text-field v-model="search" label="Search" single-line hide-details class="title"></v-text-field>
+
+      <v-btn class="title" density="compact" icon="mdi-magnify"></v-btn> -->
+      <v-spacer></v-spacer>
+
+
+      <v-btn text @click="addbook">Add a Book</v-btn>
+      <v-btn text @click="logout">Logout</v-btn>
+
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn icon="mdi-account" v-bind="props"></v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+
+            <v-list-item-title>Welcome</v-list-item-title>
+            <v-list-item-title>Ali Ashraf</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-title @click="clickevent('home')">Home</v-list-item-title>
+            <v-list-item-title @click="clickevent('orders')">Orders</v-list-item-title>
+            <v-list-item-title @click="clickevent('users')">Users</v-list-item-title>
+
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+    </v-app-bar>
+
+
+
+    <div class="my-10 mx-10 py-10">
+
+
+      <div v-if="home">
+        <h1>Home</h1>
+
+        <v-container class="d-flex" fluid>
+          <v-row class="mb-6" no-gutters>
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="6">
+              <div>
+                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+
+      <div v-if="orders">
+        <h1>Orders</h1>
+      </div>
+
+
+      <div v-if="users">
+        <h1>Users</h1>
+      </div>
+
+
+    </div>
+
+
+
+  </v-app>
+</template>
+
+<script>
+import navbar from '../layouts/Navbar.vue'
+import card from '../components/card.vue'
+export default {
+  components: { navbar, card },
+  props: {},
+  data() {
+    return {
+      home: true,
+      orders: false,
+      users: false,
+      home: [],
+      orders: [],
+      users: [],
+      search: '',
+      books: [
+        { "id": '1', "title": 'abc', "description": 'Lorem', "price": '20' },
+        { "id": '2', "title": 'abcd', "description": 'Loremd', "price": '200' },
+        { "id": '3', "title": 'abcde', "description": 'Loremde', "price": '200' },
+        { "id": '4', "title": 'abcdef', "description": 'Loremdef', "price": '200' },
+        { "id": '5', "title": 'abcdefg', "description": 'Loremdefg', "price": '200' },
+      ]
+
+
+
+
+    }
+
+  },
+  methods: {
+    clickevent(name) {
+      console.log(name);
+      if (name === 'home') {
+        this.home = true;
+        this.orders = false;
+        this.users = false;
+
+      }
+      else if (name === 'orders') {
+        this.home = false;
+        this.orders = true;
+        this.users = false;
+
+      }
+      else if (name === 'users') {
+        this.home = false;
+        this.orders = false;
+        this.users = true;
+
+      }
+
+    },
+    logout() {
+
+    },
+    addbook() {
+
+    },
+
+
+  },
+
+  computed() {
+
+  },
+
+
+}
+</script>
+
+<style scoped>
+/* Add any custom styles for your Navbar here */
+
+/* Media query for screens smaller than 600px */
+@media (max-width: 800px) {
+  .toggle-icon {
+    display: inline-block;
+    /* Show the hamburger icon */
+    font-size: 12em;
+  }
+
+  .title {
+    display: none;
+    /* Hide the title */
+  }
+
+  .logout-btn {
+    font-size: 12px;
+    /* Reduce the font size of the Logout button */
+  }
+}
+
+/* Add more media queries and styles as needed for other screen sizes */
+</style>

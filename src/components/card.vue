@@ -1,6 +1,6 @@
 
 <template>
-    <v-card class="mx-auto ma-4" max-width="95%">
+    <v-card class="mx-auto ma-4" max-width="95%" :cardid=id>
         <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="300px" cover></v-img>
 
         <v-card-title>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-    props: {},
+    props: ['id', 'title', 'description', 'price'],
     data: () => ({
         show: false,
 

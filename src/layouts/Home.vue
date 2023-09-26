@@ -57,7 +57,7 @@
     <div class="my-10 mx-10 py-10">
 
 
-      <div v-if="home">
+      <div v-if="home1">
         <h1>Home</h1>
 
         <v-container class="d-flex" fluid>
@@ -71,16 +71,16 @@
         </v-container>
       </div>
 
-      <div v-if="books">
+      <div v-if="books1">
         <h1>Books</h1>
       </div>
 
-      <div v-if="catelog">
+      <div v-if="catelog1">
         <h1>Catelog</h1>
       </div>
 
 
-      <div v-if="orders">
+      <div v-if="orders1">
         <h1>Orders</h1>
       </div>
 
@@ -100,10 +100,10 @@ export default {
   props: {},
   data() {
     return {
-      home: true,
-      books: false,
-      catelog: false,
-      orders: false,
+      home1: true,
+      books1: false,
+      catelog1: false,
+      orders1: false,
       home: [],
       books: [],
       catelog: [],
@@ -127,30 +127,30 @@ export default {
     clickevent(name) {
       console.log(name);
       if (name === 'home') {
-        this.home = true;
-        this.books = false;
-        this.catelog = false;
-        this.orders = false;
+        this.home1 = true;
+        this.books1 = false;
+        this.catelog1 = false;
+        this.orders1 = false;
       }
       else if (name === 'books') {
-        this.home = false;
-        this.books = true;
-        this.catelog = false;
-        this.orders = false;
+        this.home1 = false;
+        this.books1 = true;
+        this.catelog1 = false;
+        this.orders1 = false;
 
       }
       else if (name === 'catelog') {
-        this.home = false;
-        this.books = false;
-        this.catelog = true;
-        this.orders = false;
+        this.home1 = false;
+        this.books1 = false;
+        this.catelog1 = true;
+        this.orders1 = false;
 
       }
       else if (name === 'orders') {
-        this.home = false;
-        this.books = false;
-        this.catelog = false;
-        this.orders = true;
+        this.home1 = false;
+        this.books1 = false;
+        this.catelog1 = false;
+        this.orders1 = true;
 
       }
 
@@ -164,8 +164,10 @@ export default {
 
 
   },
+  mounted: {
 
-  computed() {
+  },
+  computed: {
 
   },
 
