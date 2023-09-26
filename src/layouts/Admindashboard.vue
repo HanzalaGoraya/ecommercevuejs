@@ -18,6 +18,9 @@
 
 
       <v-btn text @click="addbook">Add a Book</v-btn>
+      <div v-if="addaproduct">
+        <addproduct :dialog=addaproduct />
+      </div>
       <v-btn text @click="logout">Logout</v-btn>
 
       <v-menu>
@@ -92,8 +95,9 @@
 import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
 import usercard from '../components/usercard.vue'
+import addproduct from '@/components/addproduct.vue'
 export default {
-  components: { navbar, card, usercard },
+  components: { navbar, card, usercard, addproduct },
   props: {},
   data() {
     return {
@@ -104,6 +108,7 @@ export default {
       orders: [],
       users: [],
       search: '',
+      addaproduct: false,
       books: [
         { "id": '1', "title": 'abc', "description": 'Lorem', "price": '20' },
         { "id": '2', "title": 'abcd', "description": 'Loremd', "price": '200' },
@@ -145,6 +150,7 @@ export default {
 
     },
     addbook() {
+      this.addaproduct = !this.addaproduct;
 
     },
 

@@ -1,8 +1,8 @@
 
 <template>
-    <v-card class="mx-auto ma-4" max-width="95%" :cardid=id>
-        <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="300px" cover></v-img>
-
+    <v-card class="mx-auto ma-4" max-width="98%" :cardid=id>
+        <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAcPCYPm9eGKbzw0sfMu6aBQSIHYy9gIdjMQ&usqp=CAU"
+            height="250px" cover />
         <v-card-title>
             {{ title }}
         </v-card-title>
@@ -21,7 +21,7 @@
             </div>
         </v-expand-transition>
         <v-card-actions>
-            <v-btn color="orange-lighten-2" variant="text">
+            <v-btn color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Product Details</span>
             </v-btn>
 

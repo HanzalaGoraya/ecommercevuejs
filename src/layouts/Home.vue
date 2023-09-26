@@ -58,11 +58,11 @@
 
 
       <div v-if="home1">
-        <h1>Home</h1>
+        <h1>HomePage</h1>
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="6">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="3">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" />
               </div>
@@ -72,16 +72,16 @@
       </div>
 
       <div v-if="books1">
-        <h1>Books</h1>
+        <h1>BooksPage</h1>
       </div>
 
       <div v-if="catelog1">
-        <h1>Catelog</h1>
+        <h1>CatelogPage</h1>
       </div>
 
 
       <div v-if="orders1">
-        <h1>Orders</h1>
+        <h1>OrdersPage</h1>
       </div>
 
 

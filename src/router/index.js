@@ -9,13 +9,13 @@ import Admindashboard from '@/layouts/Admindashboard.vue'
 const routes = [
 
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: Login
   },
 
   {
-    path: '/',
+    path: '/signup',
     name: 'Signup',
     component: Signup
   },
