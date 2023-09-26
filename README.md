@@ -5,7 +5,8 @@ Project Overvie/Brainstorming:
 4: AdminPage : Navbar[Orders(pending and completed), Users(with permissions to Cruds), Profile-icon(personel info) , Add-Product(form to add books), LogoutButton ] 
 Required Time : 2nd half of thursday (if backend provide us with apis on time)
 
-
+26-09-2023 task completed:
+1: created sign up, login, userdashboardlayout and admindashboardlayout.
 
 
 
