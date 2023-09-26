@@ -37,15 +37,36 @@
 
       <v-menu>
         <template v-slot:activator="{ props }">
-          <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+          <v-btn icon="mdi-heart" v-bind="props"></v-btn>
         </template>
 
         <v-list>
           <v-list-item>
-            <v-list-item-title @click="clickevent('home')">Home</v-list-item-title>
-            <v-list-item-title @click="clickevent('books')">Books</v-list-item-title>
-            <v-list-item-title @click="clickevent('catelog')">Catelog</v-list-item-title>
-            <v-list-item-title @click="clickevent('orders')">Orders</v-list-item-title>
+            <v-list-item-title>
+              <div class="pa-4 bg-light-green text-white">Bookd ID:ID | name : BOOK | <v-btn density="compact"
+                  icon="mdi-cart"></v-btn></div>
+            </v-list-item-title>
+
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+        </template>
+
+        <v-list class="rounded-xl">
+          <v-list-item>
+            <v-list-item-title class="pa-4 bg-light-green text-white rounded"
+              @click="clickevent('home')">Home</v-list-item-title>
+            <v-list-item-title class="pa-4 bg-light-green text-white rounded"
+              @click="clickevent('books')">Books</v-list-item-title>
+            <v-list-item-title class="pa-4 bg-light-green text-white rounded"
+              @click="clickevent('catelog')">Catelog</v-list-item-title>
+            <v-list-item-title class="pa-4 bg-light-green text-white rounded"
+              @click="clickevent('orders')">Orders</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -62,9 +83,10 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="3">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
-                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" />
+                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
+                  :user="user" />
               </div>
             </v-col>
           </v-row>
@@ -96,14 +118,16 @@
 import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
 export default {
+  props: [],
   components: { navbar, card },
-  props: {},
+
   data() {
     return {
       home1: true,
       books1: false,
       catelog1: false,
       orders1: false,
+      user: true,
       home: [],
       books: [],
       catelog: [],

@@ -64,9 +64,10 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="6">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
-                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" />
+                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
+                  :delete="true" />
               </div>
             </v-col>
           </v-row>
