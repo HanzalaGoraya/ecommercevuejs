@@ -1,8 +1,9 @@
 Project Overvie/Brainstorming:
 1: Sign UP Page with attributes [username and password] with buttons [GOTOlogin and sign up].
-2: Login page with attributes [username and password] with buttons [login and sign up].
-3: HomePAge: NAvbar[Home , Books, Catelog, Order, Serach bar, Cart and profile]
-
+2: Login page with attributes [username and password] with buttons [login and sign up](it will also provide dashboards according to user or admin).
+3: HomePAge: NAvbar[Home , Books, Catelog, Order, Serach bar, Cart-icon and profile-icon, Logout Button], [Home] will display recommended products, [Books] will display all the books, [Catelog] will include all the types of books e.g (fiction, education, novels etc), [Order] will display all the pending and completed orders.
+4: AdminPage : Navbar[Orders(pending and completed), Users(with permissions to Cruds), Profile-icon(personel info) , Add-Product(form to add books), LogoutButton ] 
+Required Time : 2nd half of thursday (if backend provide us with apis on time)
 
 
 
