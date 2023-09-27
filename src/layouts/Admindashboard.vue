@@ -64,7 +64,7 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in home1" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
                   :delete="true" />
@@ -76,6 +76,18 @@
 
       <div v-if="orders">
         <h1>Orders</h1>
+
+        <v-container class="d-flex" fluid>
+          <v-row class="mb-6" no-gutters>
+            <v-col v-for="book in getorders" :key="book.id" cols="12" sm="6" md="6" lg="4">
+              <div>
+                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
+                  :delete="true" />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+
       </div>
 
 
@@ -97,26 +109,24 @@ import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
 import usercard from '../components/usercard.vue'
 import addproduct from '@/components/addproduct.vue'
+
 export default {
-  components: { navbar, card, usercard, addproduct },
+  components: { navbar, card, usercard, addproduct, },
   props: {},
   data() {
     return {
       home: true,
       orders: false,
       users: false,
-      home: [],
-      orders: [],
-      users: [],
       search: '',
       addaproduct: false,
-      books: [
-        { "id": '1', "title": 'abc', "description": 'Lorem', "price": '20' },
-        { "id": '2', "title": 'abcd', "description": 'Loremd', "price": '200' },
-        { "id": '3', "title": 'abcde', "description": 'Loremde', "price": '200' },
-        { "id": '4', "title": 'abcdef', "description": 'Loremdef', "price": '200' },
-        { "id": '5', "title": 'abcdefg', "description": 'Loremdefg', "price": '200' },
-      ]
+      // books: [
+      //   // { "id": '1', "title": 'abc', "description": 'Lorem', "price": '20' },
+      //   // { "id": '2', "title": 'abcd', "description": 'Loremd', "price": '200' },
+      //   // { "id": '3', "title": 'abcde', "description": 'Loremde', "price": '200' },
+      //   // { "id": '4', "title": 'abcdef', "description": 'Loremdef', "price": '200' },
+      //   // { "id": '5', "title": 'abcdefg', "description": 'Loremdefg', "price": '200' },
+      // ]
 
 
 
@@ -152,13 +162,26 @@ export default {
     },
     addbook() {
       this.addaproduct = !this.addaproduct;
-
     },
 
 
   },
 
-  computed() {
+  computed: {
+    books1() {
+
+      return this.$store.state.books
+
+    },
+    getorders() {
+
+      return this.$store.state.orders;
+
+    },
+    home1() {
+      return this.$store.state.home;
+
+    }
 
   },
 
