@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title class="title" @click="clickevent('home')">Home </v-toolbar-title>
       <v-toolbar-title class="title" @click="clickevent('books')">Books </v-toolbar-title>
-      <v-toolbar-title class="title" @click="clickevent('catelog')">Catelog </v-toolbar-title>
+      <!-- <v-toolbar-title class="title" @click="clickevent('catelog')">Catelog </v-toolbar-title> -->
       <v-toolbar-title class="title" @click="clickevent('orders')">Orders </v-toolbar-title>
 
 
@@ -29,8 +29,8 @@
         <v-list>
           <v-list-item>
 
-            <v-list-item-title>Welcome</v-list-item-title>
-            <v-list-item-title>Ali Ashraf</v-list-item-title>
+            <v-list-item-title>{{ username }}</v-list-item-title>
+            <v-list-item-title>{{ email }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -83,10 +83,10 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in gethome" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
-                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
-                  :user="user" />
+                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" :user="user"
+                  :imageurl="book.cover_image" />
               </div>
             </v-col>
           </v-row>
@@ -98,20 +98,20 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in getbooks" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
-                  :user="user" />
+                  :imageurl="book.cover_image" :user="user" />
               </div>
             </v-col>
           </v-row>
         </v-container>
       </div>
 
-      <div v-if="catelog1">
+      <!-- <div v-if="catelog1">
         <h1>CatelogPage</h1>
 
-        <!-- <v-container class="d-flex" fluid>
+         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
             <v-col v-for="book in catelog" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
@@ -120,8 +120,8 @@
               </div>
             </v-col>
           </v-row>
-        </v-container> -->
-      </div>
+        </v-container>
+    </div> -->
 
 
       <div v-if="orders1">
@@ -129,10 +129,10 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in userorders" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="order in orders" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
-                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
-                  :user="user" />
+                <ordercard :orderid="order.id" :userid="order.user_id" :description="order.status"
+                  :totalamount="order.total_amount" :user="user" />
               </div>
             </v-col>
           </v-row>
@@ -220,6 +220,7 @@
 import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
 import cart from '../components/cart.vue'
+import axios from 'axios'
 export default {
   props: [],
   components: { navbar, card, cart },
@@ -233,6 +234,9 @@ export default {
       orders1: false,
       cart1: false,
       user: true,
+      books: '',
+      orders: '',
+
       // books: [
       //   { "id": '1', "title": 'abc', "description": 'Lorem', "price": '20' },
       //   { "id": '2', "title": 'abcd', "description": 'Loremd', "price": '200' },
@@ -244,6 +248,9 @@ export default {
       search: '',
       quantity: '1',
       total: '',
+      username: localStorage.getItem(user.user.name),
+      email: localStorage.getItem(user.user.email),
+
 
     }
 
@@ -257,7 +264,7 @@ export default {
         this.catelog1 = false;
         this.orders1 = false;
         this.cart1 = false;
-
+        console.log(this.$store.state.users);
       }
       else if (name === 'books') {
         this.home1 = false;
@@ -293,39 +300,111 @@ export default {
       }
 
     },
-    logout() {
+    async logout() {
+
+      // let result = await axios.post('http://10.0.10.220:8080/api/logout', {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+
+      //     'Authorization': `Bearer ${localStorage.getItem(user.token)}`,
+      //   },
+
+      // })
+      // console.log(localStorage.getItem(user.token));
+      this.$router.push('/');
 
     },
 
     proceedtocheckout() {
       this.$router.push('/checkout');
-    }
+    },
+    async getbooks() {
+      // Send a GET request to fetch products using Axios with the authentication token in the headers
+      axios.get('http://10.0.10.220:8080/api/book', {
+        // headers: {
+        //     // 'Authorization': `Bearer ${store.getters.firstUserToken}`, // Use a computed getter to access the token property of the first user
+        // },
+      })
+        .then((response) => {
+          // Handle the response data
+          console.log(response.data.books);
+          this.books = response.data.books;
+          console.log(this.books);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
+      return this.books;
+
+    },
+    async getorders() {
+      // Send a GET request to fetch products using Axios with the authentication token in the headers
+      axios.get('http://10.0.10.220:8080/api/userorder', {
+        // headers: {
+        //   'Authorization': `Bearer ${localStorage.getItem(user.token)}`, // Use a computed getter to access the token property of the first user
+        // },
+      })
+        .then((response) => {
+          // Handle the response data
+          console.log(response.data.orders);
+          this.orders = response.data.orders;
+          console.log(this.orders);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
+      return this.orders;
+
+    },
 
 
   },
   computed: {
-    getbooks() {
 
-      return this.$store.state.books;
-    },
-    // catelog() {
+    // getbooks() {
+    //   // Send a GET request to fetch products using Axios with the authentication token in the headers
+    //   axios.get('http://10.0.10.220:8080/api/book', {
+    //     // headers: {
+    //     //     // 'Authorization': `Bearer ${store.getters.firstUserToken}`, // Use a computed getter to access the token property of the first user
+    //     // },
+    //   })
+    //     .then((response) => {
+    //       // Handle the response data
+    //       console.log(response.data);
+    //       this.books = response.data;
+    //       console.log(this.books);
+    //       // Do something with the fetched products
+    //     })
+    //     .catch((error) => {
+    //       // Handle errors
+    //       console.error('Error fetching products:', error);
+    //     });
+
+    //   return this.books;
 
     // },
     gethome() {
 
       return this.$store.state.home;
     },
-    userorders() {
 
-      return this.$store.state.userorders;
-    },
 
 
   },
+  mounted() {
+    this.getbooks();
+    this.getorders();
 
-
-
+  }
 }
+
+
 </script>
 
 <style scoped>

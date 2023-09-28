@@ -35,6 +35,7 @@
 
 
 <script>
+import axios from 'axios';
 export default
   {
     data() {
@@ -47,18 +48,29 @@ export default
       }
     },
     methods: {
-      Signup() {
-        const registrationdetails[
-          { "username": username,
-            "email": email,
-            "password": password,
-            "confirmpassword": confirmpassword, },
+      async Signup() {
+        let result = await axios.post('http://10.0.10.220:8080/api/register', {
+          name: this.username,
 
-        ]
+          email: this.email,
+
+          password: this.password,
+
+          confirm_password: this.confirmpassword,
+
+        })
 
 
+        if (result.status == 200) {
+
+          // localStorage.setItem('user-info', JSON.stringify(result.data));
+          this.$router.push('/');
+
+        }
       }
+
     }
+
 
   }
 </script>

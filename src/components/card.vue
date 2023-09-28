@@ -1,9 +1,7 @@
 
 <template>
     <v-card class="mx-auto ma-4" max-width="98%" :cardid=id>
-        <v-img
-            src="https://png.pngtree.com/template/20190425/ourmid/pngtree-green-color-fluid-book-cover-design-image_147204.jpg"
-            height="400px" cover />
+        <v-img :src="imageurl" height="400px" cover />
         <v-card-title>
             {{ title }}
         </v-card-title>
@@ -42,9 +40,10 @@
 
 <script>
 export default {
-    props: ['id', 'title', 'description', 'price', 'delete', 'user'],
+    props: ['id', 'title', 'description', 'price', 'delete', 'imageurl', 'user'],
     data: () => ({
         show: false,
+
 
 
     }),
