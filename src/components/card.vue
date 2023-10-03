@@ -14,21 +14,25 @@
             <div>
                 <v-divider></v-divider>
 
-                <v-card-text>
+                <v-card-text class="ellipses">
                     description : {{ description }}
                 </v-card-text>
             </div>
         </v-expand-transition>
         <v-card-actions>
-            <v-btn color="orange-lighten-2" variant="text" :bookid="id">
+            <v-btn @click="productdetailspage(id)" color="orange-lighten-2" variant="text" :product_id="id">
                 <span>Product Details</span>
             </v-btn>
             <v-btn v-if=this.user color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Add To Wishlist</span>
             </v-btn>
-            <v-btn v-if=this.delete color="orange-lighten-2" variant="text" :bookid="id">
+            <v-btn v-if=this.user color="orange-lighten-2" variant="text" :bookid="id" @click="addtocart(id)">
+                <span>Add To Cart</span>
+            </v-btn>
+            <v-btn v-if=this.delete @click="deletebooks(id)" color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Delete</span>
             </v-btn>
+
 
         </v-card-actions>
 
@@ -39,16 +43,72 @@
 
 
 <script>
+import axios from 'axios'
+import { globalStaticArray } from '../components/globalArray.js';
 export default {
-    props: ['id', 'title', 'description', 'price', 'delete', 'imageurl', 'user'],
+    props: ['id', 'userid', 'status', 'price', 'delete', 'imageurl', 'user', 'description'],
     data: () => ({
         show: false,
 
 
 
     }),
+    methods: {
+        productdetailspage(id) {
+            this.$router.push({
+                name: "Productpage",
+                params: { product_id: id },
+            })
+        },
+
+        async deletebooks(id) {
+            // Send a GET request to fetch products using Axios with the authentication token in the headers
+
+            axios.delete('http://10.0.10.220:8080/api/book/' + id, {
+                headers: {
+                    'Authorization': `Bearer ${"92|5IirXsvRgV6eAlWyLyCjXKiFlsrH7DQAFQvW0LSX2a8df93c"}`, // Use a computed getter to access the token property of the first user
+                },
+            })
+                .then((response) => {
+                    // Handle the response data
+
+                    console.log(response.data);
+                    // Do something with the fetched products
+                })
+                .catch((error) => {
+                    // Handle errors
+                    console.error('Error fetching products:', error);
+                });
+
+
+
+        },
+        async addtocart(id) {
+            globalStaticArray.push(id);
+            console.log(globalStaticArray);
+        }
+
+
+    },
 }
 </script> 
+<style>
+.card-text {
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    max-height: 3em;
+
+}
+</style>
 
 
 

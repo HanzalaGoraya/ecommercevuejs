@@ -4,7 +4,7 @@ import Login from '@/components/Login.vue'
 import Signup from '@/components/Signup.vue'
 import Home from '@/layouts/Home.vue'
 import Admindashboard from '@/layouts/Admindashboard.vue'
-
+import Productpage from '@/components/productcard.vue'
 
 const routes = [
 
@@ -29,6 +29,12 @@ const routes = [
     path: '/admin',
     name: 'Admindashboard',
     component: Admindashboard
+  },
+  {
+    path: '/productdetails/:product_id',
+    name: 'Productpage',
+    component: Productpage,
+    props: true,
   },
 
 ]

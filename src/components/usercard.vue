@@ -8,6 +8,7 @@
                     <th class="text-left">ID</th>
                     <th class="text-left">Username</th>
                     <th class="text-left">Email</th>
+                   
 
                 </tr>
 
@@ -39,9 +40,7 @@ export default {
         }
     },
     computed: {
-        getusers() {
-            return this.$store.state.users
-        }
+
     }
 }
 

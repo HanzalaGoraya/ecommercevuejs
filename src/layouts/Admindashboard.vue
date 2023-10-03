@@ -64,10 +64,10 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in home1" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
-                  :delete="true" />
+                  :imageurl="book.cover_image" :delete="true" />
               </div>
             </v-col>
           </v-row>
@@ -79,10 +79,46 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in getorders" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in orders1.orders" :key="book.id" cols="12" sm="6" md="6" lg="4">
               <div>
-                <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
-                  :delete="true" />
+                <v-card class="mx-auto ma-4" max-width="98%" :cardid=id>
+                  <v-img src="../assets/noimage.jpg" height="400px" cover />
+                  <v-card-title>
+                    BookID: {{ book.id }}
+                  </v-card-title>
+                  <v-card-subtitle>
+                    UserID: {{ book.user_id }}
+                  </v-card-subtitle>
+                  <v-card-subtitle>
+
+                  </v-card-subtitle>
+
+                  <v-expand-transition>
+                    <div>
+                      <v-divider></v-divider>
+                      <v-card-text>
+                        price : $ {{ book.total_amount }}
+                      </v-card-text>
+                      <v-card-text>
+                        status : {{ book.status }}
+                      </v-card-text>
+                    </div>
+                  </v-expand-transition>
+                  <v-card-actions>
+                    <!-- <v-btn color="orange-lighten-2" variant="text" :bookid="id">
+                      <span>Product Details</span>
+                    </v-btn>
+                    <v-btn v-if=this.user color="orange-lighten-2" variant="text" :bookid="id">
+                      <span>Add To Wishlist</span>
+                    </v-btn> -->
+                    <v-btn v-if=this.delete color="orange-lighten-2" variant="text" :bookid="id">
+                      <span>Delete</span>
+                    </v-btn>
+
+                  </v-card-actions>
+
+
+                </v-card>
               </div>
             </v-col>
           </v-row>
@@ -93,7 +129,40 @@
 
       <div v-if="users">
         <h1>Users</h1>
-        <usercard />
+
+        <div class="d-flex justify-center align-center">
+          <v-table class="elevation-5 mt-10 w-75">
+            <thead class="">
+
+              <tr>
+                <th><v-icon class="">mdi-account</v-icon></th>
+                <th class="text-left">ID</th>
+                <th class="text-left">Username</th>
+                <th class="text-left">Email</th>
+
+              </tr>
+
+
+            </thead>
+            <tbody>
+              <tr v-for="item in users1.data" :key="item.id">
+
+                <th><v-icon class="">mdi-account</v-icon></th>
+                <th class="text-left">{{ item.id }}</th>
+                <th class="text-left">{{ item.name }}</th>
+                <th class="text-left">{{ item.email }}</th>
+                <th>
+                  <div class="text-end">
+                    <v-btn class="text-right" @click="deleteuser(item.id)">Delete</v-btn>
+                  </div>
+                </th>
+              </tr>
+
+            </tbody>
+          </v-table>
+        </div>
+
+
       </div>
 
 
@@ -109,6 +178,7 @@ import navbar from '../layouts/Navbar.vue'
 import card from '../components/card.vue'
 import usercard from '../components/usercard.vue'
 import addproduct from '@/components/addproduct.vue'
+import axios from 'axios'
 
 export default {
   components: { navbar, card, usercard, addproduct, },
@@ -127,7 +197,9 @@ export default {
       //   // { "id": '4', "title": 'abcdef', "description": 'Loremdef', "price": '200' },
       //   // { "id": '5', "title": 'abcdefg', "description": 'Loremdefg', "price": '200' },
       // ]
-
+      books: '',
+      users1: '',
+      orders1: '',
 
 
 
@@ -157,31 +229,152 @@ export default {
       }
 
     },
-    logout() {
+    async logout() {
+      this.$router.push('/');
+      await axios.post('http://10.0.10.220:8080/api/logout', {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("userdetails"))}`, // Use a computed getter to access the token property of the first user
+        },
+
+      })
+        .then((response) => {
+          // Handle the response data
+
+
+          console.log(response);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
 
     },
     addbook() {
       this.addaproduct = !this.addaproduct;
     },
+    async getbooks() {
+      // Send a GET request to fetch products using Axios with the authentication token in the headers
+      axios.get('http://10.0.10.220:8080/api/book', {
+        // headers: {
+        //     // 'Authorization': `Bearer ${store.getters.firstUserToken}`, // Use a computed getter to access the token property of the first user
+        // },
+      })
+        .then((response) => {
+          // Handle the response data
+          console.log(response.data.books);
+          this.books = response.data.books;
+          console.log(this.books);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
+      // return this.books;
+
+    },
+
+    async getorders() {
+
+
+      // Send a GET request to fetch products using Axios with the authentication token in the headers
+      axios.get('http://10.0.10.220:8080/api/order', {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("userdetails"))}` // Use a computed getter to access the token property of the first user
+        },
+      })
+
+        .then((response) => {
+          // Handle the response data
+
+          console.log(response);
+          this.orders1 = response.data;
+          console.log(this.orders1);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
+      // return this.orders1;
+
+    },
+
+    async getallusers() {
+      // Send a GET request to fetch products using Axios with the authentication token in the headers
+
+
+      axios.get('http://10.0.10.220:8080/api/users', {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("userdetails"))}`, // Use a computed getter to access the token property of the first user
+        },
+      })
+        .then((response) => {
+          // Handle the response data
+          this.users1 = response.data;
+          console.log(this.users1);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
+      return this.users1;
+
+    },
+
+    async deleteuser(id) {
+      // Send a GET request to fetch products using Axios with the authentication token in the headers
+
+      axios.delete('http://10.0.10.220:8080/api/users/' + id, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("userdetails"))}`, // Use a computed getter to access the token property of the first user
+        },
+      })
+        .then((response) => {
+          // Handle the response data
+
+          console.log(response.data);
+          // Do something with the fetched products
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error('Error fetching products:', error);
+        });
+
+
+
+    },
 
 
   },
+  mounted() {
+    this.getallusers();
+    this.getbooks();
+
+    this.getorders();
+  },
 
   computed: {
-    books1() {
+    // books1() {
 
-      return this.$store.state.books
+    //   return this.$store.state.books
 
-    },
-    getorders() {
+    // },
+    // getorders() {
 
-      return this.$store.state.orders;
+    //   return this.$store.state.orders;
 
-    },
-    home1() {
-      return this.$store.state.home;
+    // },
+    // home1() {
+    //   return this.$store.state.home;
 
-    }
+    // }
 
   },
 

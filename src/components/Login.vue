@@ -46,12 +46,27 @@ export default
           email: this.email,
           password: this.password,
         })
+
+
         if (result.status == 200) {
+
           console.log(result.data);
           // this.$store.state.users.push(result.data);
-          localStorage.setItem('user', JSON.stringify(result.data));
-          this.$router.push('/home');
 
+          if (this.email === "admin@gmail.com") {
+            localStorage.setItem('userid', JSON.stringify(result.data.user.id));
+            localStorage.setItem('userdetails', JSON.stringify(result.data.token));
+            localStorage.setItem('username', JSON.stringify(result.data.user.name));
+            localStorage.setItem('email', JSON.stringify(result.data.user.email));
+            this.$router.push('/admin');
+          }
+          else {
+            localStorage.setItem('userid', JSON.stringify(result.data.user.id));
+            localStorage.setItem('userdetails', JSON.stringify(result.data.token));
+            localStorage.setItem('username', JSON.stringify(result.data.user.name));
+            localStorage.setItem('email', JSON.stringify(result.data.user.email));
+            this.$router.push('/home');
+          }
         }
       }
 
