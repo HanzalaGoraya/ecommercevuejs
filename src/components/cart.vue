@@ -36,6 +36,8 @@
 
                 </v-card-actions>
 
+
+
             </v-card>
         </v-main>
         <v-btn @click="proceedtocheckout" color="orange-lighten-2" variant="text" :bookid="id">

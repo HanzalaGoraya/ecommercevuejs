@@ -2,9 +2,11 @@
   <v-app>
 
 
-    <v-app-bar app class="color-blue-lighten-3">
+    <v-app-bar app class="bg-orange-darken-1 color-blue-lighten-3">
       <v-spacer></v-spacer>
-      <div><v-toolbar-title class="text-blue">User Dashboard</v-toolbar-title></div>
+      <div><v-toolbar-title class="text-grey-darken-4"><strong>
+            <h2>BOOK SHOP</h2>
+          </strong></v-toolbar-title></div>
       <v-spacer></v-spacer>
       <v-toolbar-title class="title" @click="clickevent('home')">Home </v-toolbar-title>
       <v-toolbar-title class="title" @click="clickevent('books')">Books </v-toolbar-title>
@@ -43,8 +45,15 @@
         <v-list>
           <v-list-item>
             <v-list-item-title>
-              <div class="pa-4 bg-light-green text-white">Bookd ID:ID | name : BOOK | <v-btn density="compact"
-                  icon="mdi-cart"></v-btn></div>
+              <div class="pa-4 bg-light-green text-white">Book ID:ID <v-btn density="compact" icon="mdi-cart"></v-btn>
+
+              </div>
+            </v-list-item-title>
+            <v-list-item-title>
+              <div class="pa-4 bg-light-green text-white" v-for="item in this.wishlistarray">Book ID:{{ item }} |
+                <v-btn @click="addtocart(item)" density="compact" icon="mdi-cart"></v-btn>
+
+              </div>
             </v-list-item-title>
 
           </v-list-item>
@@ -83,7 +92,7 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="4" md="3" lg="2">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price" :user="user"
                   :imageurl="book.cover_image" />
@@ -98,7 +107,7 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="4" md="3" lg="2">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
                   :imageurl="book.cover_image" :user="user" />
@@ -158,8 +167,8 @@
       <div v-if="cart1">
         <h1>Cart</h1>
         <div v-for="item in cart" :key="item">
-          <v-card class="mx-10 my-10" max-width="80%" :cardid=id>
-            <v-img :src="item.cover_image" height="300px" cover />
+          <v-card class="mx-10 my-10" max-width="800px" :cardid=id>
+            <v-img :src="item.cover_image" width="250px" height="400px" cover />
             <v-card-title>
               {{ item.title }}
             </v-card-title>
@@ -199,12 +208,13 @@
               <v-btn color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Product Details</span>
               </v-btn>
-              <v-btn @click="deletecart" color="orange-lighten-2" variant="text" :bookid="id">
+              <v-btn @click="deletecart(item.id)" color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Delete</span>
               </v-btn>
 
 
             </v-card-actions>
+            <span class="ma-2 pa-2"> Total Price : {{ quantity * item.price }} </span>
 
           </v-card>
         </div>
@@ -223,8 +233,7 @@
     <v-footer class="bg-grey-lighten-1">
       <v-row justify="center" no-gutters>
         <v-form>
-          <div><v-text-field type="email" v-model="newsletter"
-              label="Enter Email To subscribe to our newsletter"></v-text-field>
+          <div>
             <v-btn @click="subscribenewsletter" block class="mt-2">Submit</v-btn>
           </div>
         </v-form>
@@ -240,6 +249,7 @@ import card from '../components/card.vue'
 import cart from '../components/cart.vue'
 import axios from 'axios'
 import { globalStaticArray } from '@/components/globalArray'
+import { globalWishListStaticArray } from '@/components/globalWishListArray'
 export default {
   props: [],
   components: { navbar, card, cart },
@@ -273,19 +283,26 @@ export default {
       cart: '',
       username: JSON.parse(localStorage.getItem("username")),
       email: JSON.parse(localStorage.getItem("email")),
-
+      wishlistarray: globalWishListStaticArray,
 
 
     }
 
   },
   methods: {
-    deletecart() {
-      globalStaticArray[0] = null;
+    showToast() {
+      // Display a toast message
+      this.snackbarText = 'Added To Cart';
+      this.snackbarColor = 'success';
+      this.snackbar = true;
+    },
+    deletecart(item) {
+      console.log(item);
+      globalStaticArray[0] = 0;
 
     },
     async subscribenewsletter() {
-      await axios.post('http://10.0.10.220:8080/api/subscribe', this.newsletter, {
+      await axios.post('http://10.0.10.220:8080/api/subscribe', {
         headers: {
           'Authorization': `Bearer ${JSON.parse(localStorage.getItem("userdetails"))}`, // Use a computed getter to access the token property of the first user
         },
@@ -382,6 +399,7 @@ export default {
       const data = {
         book_id: globalStaticArray[0],
         quantity: this.quantity,
+
       };
 
       await axios.post('http://10.0.10.220:8080/api/confirm', data, {
@@ -475,7 +493,11 @@ export default {
           });
 
       }
-    }
+    },
+    async addtocart(id) {
+      globalStaticArray.push(id);
+      console.log(globalStaticArray);
+    },
 
 
 

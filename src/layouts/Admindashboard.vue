@@ -2,9 +2,11 @@
   <v-app>
 
 
-    <v-app-bar app class="color-blue-lighten-3">
+    <v-app-bar app class="bg-orange-darken-1 color-blue-lighten-2">
       <v-spacer></v-spacer>
-      <div><v-toolbar-title class="text-blue">Admin Dashboard</v-toolbar-title></div>
+      <div><v-toolbar-title class="text-grey-darken-4"><strong>
+            <h1>Admin</h1>
+          </strong></v-toolbar-title></div>
       <v-spacer></v-spacer>
       <v-toolbar-title class="title" @click="clickevent('home')">Home </v-toolbar-title>
       <v-toolbar-title class="title" @click="clickevent('orders')">Orders </v-toolbar-title>
@@ -64,7 +66,7 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in books" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in books" :key="book.id" cols="12" sm="4" md="3" lg="2">
               <div>
                 <card :id="book.id" :title="book.title" :description="book.description" :price="book.price"
                   :imageurl="book.cover_image" :delete="true" />
@@ -79,10 +81,10 @@
 
         <v-container class="d-flex" fluid>
           <v-row class="mb-6" no-gutters>
-            <v-col v-for="book in orders1.orders" :key="book.id" cols="12" sm="6" md="6" lg="4">
+            <v-col v-for="book in orders1.orders" :key="book.id" cols="12" sm="6" md="6" lg="2">
               <div>
                 <v-card class="mx-auto ma-4" max-width="98%" :cardid=id>
-                  <v-img src="../assets/noimage.jpg" height="400px" cover />
+                  <v-img src="../assets/noimage.jpg" height="300px" cover />
                   <v-card-title>
                     BookID: {{ book.id }}
                   </v-card-title>

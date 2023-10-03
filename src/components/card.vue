@@ -1,7 +1,7 @@
 
 <template>
-    <v-card class="mx-auto ma-4" max-width="98%" :cardid=id>
-        <v-img :src="imageurl" height="400px" cover />
+    <v-card class="mx-4 ma-4" max-width="98%" :cardid=id>
+        <v-img :src="imageurl" height="300px" width="200px" cover />
         <v-card-title>
             {{ title }}
         </v-card-title>
@@ -19,22 +19,29 @@
                 </v-card-text>
             </div>
         </v-expand-transition>
-        <v-card-actions>
+        <!-- <v-card-actions> -->
+        <div>
             <v-btn @click="productdetailspage(id)" color="orange-lighten-2" variant="text" :product_id="id">
-                <span>Product Details</span>
+                <span>Book Details</span>
             </v-btn>
-            <v-btn v-if=this.user color="orange-lighten-2" variant="text" :bookid="id">
+        </div>
+        <div>
+            <v-btn @click="addtowishlist(id, title)" v-if=this.user color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Add To Wishlist</span>
             </v-btn>
+        </div>
+        <div>
             <v-btn v-if=this.user color="orange-lighten-2" variant="text" :bookid="id" @click="addtocart(id)">
                 <span>Add To Cart</span>
             </v-btn>
+        </div>
+        <div>
             <v-btn v-if=this.delete @click="deletebooks(id)" color="orange-lighten-2" variant="text" :bookid="id">
                 <span>Delete</span>
             </v-btn>
+        </div>
 
-
-        </v-card-actions>
+        <!-- </v-card-actions> -->
 
 
     </v-card>
@@ -45,6 +52,7 @@
 <script>
 import axios from 'axios'
 import { globalStaticArray } from '../components/globalArray.js';
+import { globalWishListStaticArray } from '../components/globalWishListArray.js';
 export default {
     props: ['id', 'userid', 'status', 'price', 'delete', 'imageurl', 'user', 'description'],
     data: () => ({
@@ -86,6 +94,11 @@ export default {
         async addtocart(id) {
             globalStaticArray.push(id);
             console.log(globalStaticArray);
+        },
+        async addtowishlist(id) {
+
+            globalWishListStaticArray.push(id);
+            console.log(globalWishListStaticArray);
         }
 
 
@@ -93,7 +106,7 @@ export default {
 }
 </script> 
 <style>
-.card-text {
+.ellipses {
 
     display: -webkit-box;
 
@@ -105,7 +118,7 @@ export default {
 
     text-overflow: ellipsis;
 
-    max-height: 3em;
+    max-height: 4em;
 
 }
 </style>
